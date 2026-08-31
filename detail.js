@@ -51,12 +51,23 @@ function createHero(item) {
   if (item.details?.length) {
     const prose = document.createElement('div');
     prose.className = 'detail-prose';
+    prose.hidden = true;
     item.details.forEach(text => {
       const paragraph = document.createElement('p');
       paragraph.textContent = text;
       prose.append(paragraph);
     });
-    hero.append(prose);
+    const readMore = document.createElement('button');
+    readMore.className = 'read-more-button detail-read-more';
+    readMore.type = 'button';
+    readMore.textContent = 'Read more';
+    readMore.setAttribute('aria-expanded', 'false');
+    readMore.addEventListener('click', () => {
+      prose.hidden = !prose.hidden;
+      readMore.textContent = prose.hidden ? 'Read more' : 'Show less';
+      readMore.setAttribute('aria-expanded', String(!prose.hidden));
+    });
+    hero.append(readMore, prose);
   }
 
   if (item.themeBreakdown) {
