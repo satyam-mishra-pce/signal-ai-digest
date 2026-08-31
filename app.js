@@ -40,6 +40,20 @@ function renderFeed(data) {
     card.querySelector('.eyebrow').textContent = theme.eyebrow;
     card.querySelector('h2').textContent = theme.title;
     card.querySelector('.card-summary').textContent = theme.summary;
+    const expanded = card.querySelector('.expanded-summary');
+    theme.details.forEach(text => {
+      const paragraph = document.createElement('p');
+      paragraph.textContent = text;
+      expanded.append(paragraph);
+    });
+    const readMore = card.querySelector('.read-more-button');
+    readMore.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      expanded.hidden = !expanded.hidden;
+      readMore.textContent = expanded.hidden ? 'Read more' : 'Show less';
+      readMore.setAttribute('aria-expanded', String(!expanded.hidden));
+    });
     card.querySelector('time').textContent = displayDate(theme.latestAt);
     card.querySelector('time').dateTime = theme.latestAt;
     card.querySelector('.source-total').textContent = compact.format(theme.sourceCount);

@@ -45,6 +45,20 @@ function render(data) {
     card.querySelector('time').dateTime = week.weekStart;
     card.querySelector('h2').textContent = week.title;
     card.querySelector('.card-summary').textContent = week.summary;
+    const expanded = card.querySelector('.expanded-summary');
+    week.details.forEach(text => {
+      const paragraph = document.createElement('p');
+      paragraph.textContent = text;
+      expanded.append(paragraph);
+    });
+    const readMore = card.querySelector('.read-more-button');
+    readMore.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      expanded.hidden = !expanded.hidden;
+      readMore.textContent = expanded.hidden ? 'Read more' : 'Show less';
+      readMore.setAttribute('aria-expanded', String(!expanded.hidden));
+    });
     card.querySelector('.source-total').textContent = compact.format(week.sourceCount);
     card.querySelector('.evidence-copy').textContent = `${week.sourceCount} AI posts from ${week.authorCount} voices`;
     const breakdown = card.querySelector('.theme-breakdown');

@@ -48,6 +48,16 @@ function createHero(item) {
   const summary = document.createElement('p');
   summary.textContent = item.summary;
   hero.append(eyebrow, title, summary);
+  if (item.details?.length) {
+    const prose = document.createElement('div');
+    prose.className = 'detail-prose';
+    item.details.forEach(text => {
+      const paragraph = document.createElement('p');
+      paragraph.textContent = text;
+      prose.append(paragraph);
+    });
+    hero.append(prose);
+  }
 
   if (item.themeBreakdown) {
     const breakdown = document.createElement('div');
