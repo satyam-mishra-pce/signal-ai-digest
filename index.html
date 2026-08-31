@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A concise AI-only digest synthesized from selected X accounts.">
+  <title>Signal — AI digest</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="left-rail" aria-label="Primary navigation">
+      <a class="brand" href="index.html" aria-label="Signal home"><span class="brand-mark">S</span><span class="brand-name">signal</span></a>
+      <nav>
+        <a class="nav-item active" href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.2 12 4l8 7.2V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-8.8Z"/></svg><span>Digest</span></a>
+        <a class="nav-item" href="weekly.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18M8 14h3M13 14h3M8 17h3"/></svg><span>Weekly</span></a>
+        <a class="nav-item" href="search.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>Search</span></a>
+        <a class="nav-item" href="#about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.1"/></svg><span>About</span></a>
+      </nav>
+      <div class="rail-note"><span class="live-dot"></span>AI-only signal</div>
+    </aside>
+
+    <main class="feed-column" id="top">
+      <header class="feed-header"><div><h1>AI digest</h1><p id="feedSubtitle">Distilling the conversation…</p></div><span class="curated-pill">Curated</span></header>
+      <section id="feed" class="feed" aria-live="polite"><div class="loading-card"><span></span><span></span><span></span></div></section>
+    </main>
+
+    <aside class="right-rail">
+      <section class="side-card" id="about"><h2>About this feed</h2><p>Only AI engineering, models, agent workflows, tooling, safety, and product implications are included.</p><div class="stat-grid"><div><strong id="themeCount">—</strong><span>digest posts</span></div><div><strong id="sourceCount">—</strong><span>AI sources</span></div></div></section>
+      <section class="side-card accounts-card"><h2>Voices tracked</h2><div id="accountCloud" class="account-cloud"></div></section>
+      <p class="side-footnote">Summaries are editorial syntheses. Source posts remain the evidence.</p>
+    </aside>
+  </div>
+
+  <template id="digestCardTemplate">
+    <a class="digest-card" href="#">
+      <div class="card-avatar"><span>✦</span></div>
+      <div class="card-body">
+        <div class="card-meta"><strong>Signal Digest</strong><span class="verified">✓</span><span>@signal</span><span>·</span><time></time></div>
+        <span class="eyebrow"></span><h2></h2><p class="card-summary"></p>
+        <div class="evidence-strip"><div class="avatar-stack"></div><span class="evidence-copy"></span></div>
+        <div class="card-actions"><span><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.6 9.6 0 0 1-4.2-1L3 20l1.2-4A8.3 8.3 0 1 1 21 11.5Z"/></svg><b class="source-total"></b></span><span class="open-label">Open page <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></span></div>
+      </div>
+    </a>
+  </template>
+  <script src="app.js" defer></script>
+</body>
+</html>
