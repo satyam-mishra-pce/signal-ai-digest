@@ -75,7 +75,7 @@ function createHero(item) {
     breakdown.className = 'theme-breakdown';
     item.themeBreakdown.forEach(theme => {
       const chip = document.createElement('span');
-      chip.textContent = `${theme.label} · ${theme.count}`;
+      chip.textContent = theme.label;
       breakdown.append(chip);
     });
     hero.append(breakdown);
@@ -165,8 +165,8 @@ async function init() {
     document.title = `${state.item.title} — Signal`;
     detailKind.textContent = isWeekly ? 'Weekly AI digest' : 'Digest thread';
     detailMeta.textContent = isWeekly
-      ? `${displayDate(state.item.weekStart)}–${displayDate(state.item.weekEnd)} · ${state.item.sourceCount} sources`
-      : `${state.item.sourceCount} related posts · ${state.item.authorCount} authors`;
+      ? `${displayDate(state.item.weekStart)}–${displayDate(state.item.weekEnd)}`
+      : 'Topic digest';
     backLink.href = isWeekly ? 'weekly.html' : 'topics.html';
     detailContent.replaceChildren(createHero(state.item), createToolbar());
     const list = document.createElement('section');

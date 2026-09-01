@@ -34,9 +34,7 @@ function dateLabel(start, end) {
 
 function render(data) {
   feed.replaceChildren();
-  let sourceTotal = 0;
   for (const week of data.weeks) {
-    sourceTotal += week.sourceCount;
     const card = template.content.firstElementChild.cloneNode(true);
     card.href = `detail.html?week=${encodeURIComponent(week.id)}`;
     card.dataset.accent = week.accent;
@@ -46,22 +44,27 @@ function render(data) {
     card.querySelector('h2').textContent = week.title;
     card.querySelector('.card-summary').textContent = week.summary;
     card.querySelector('.source-total').textContent = compact.format(week.sourceCount);
-    card.querySelector('.evidence-copy').textContent = `${week.sourceCount} AI posts from ${week.authorCount} voices`;
+    card.querySelector('.evidence-copy').textContent = week.topAuthors.slice(0, 3).map(({ name }) => `@${name}`).join(' · ');
     const breakdown = card.querySelector('.theme-breakdown');
     week.themeBreakdown.forEach(theme => {
       const chip = document.createElement('span');
-      chip.textContent = `${theme.label} · ${theme.count}`;
+      chip.textContent = theme.label;
       breakdown.append(chip);
     });
     const avatars = card.querySelector('.avatar-stack');
     week.topAuthors.slice(0, 4).forEach(({ name, profilePicture }) => avatars.append(createAvatar(name, profilePicture)));
     feed.append(card);
   }
-  document.querySelector('#weekCount').textContent = data.weeks.length;
-  document.querySelector('#weeklySourceCount').textContent = compact.format(sourceTotal);
-  const oldest = data.weeks.at(-1)?.weekStart;
-  const newest = data.weeks[0]?.weekEnd;
-  document.querySelector('#feedSubtitle').textContent = `${data.weeks.length} active weeks from ${dateLabel(oldest, newest)}`;
+  document.querySelector('#feedSubtitle').textContent = 'What shipped, broke, and changed each week';
+  const topicMap = new Map();
+  data.weeks.forEach(week => week.themeBreakdown.forEach(topic => topicMap.set(topic.id, topic.label)));
+  const topics = document.querySelector('#weeklyTopics');
+  [...topicMap].slice(0, 9).forEach(([id, label]) => {
+    const link = document.createElement('a');
+    link.href = `detail.html?theme=${encodeURIComponent(id)}`;
+    link.textContent = label;
+    topics.append(link);
+  });
 }
 
 async function init() {

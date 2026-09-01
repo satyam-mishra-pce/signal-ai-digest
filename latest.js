@@ -41,7 +41,9 @@ function render() {
     button.addEventListener('click', () => { state.visible += 40; render(); });
     latestFeed.append(button);
   }
-  document.querySelector('#feedSubtitle').textContent = `${posts.length} recent AI posts after filters`;
+  document.querySelector('#feedSubtitle').textContent = posts.length === state.posts.length
+    ? 'What builders are discussing now'
+    : `${posts.length} posts match your filters`;
 }
 
 function resetAndRender() {
@@ -59,9 +61,14 @@ async function init() {
     const authors = [...new Set(state.posts.map(post => post.author))].sort((a, b) => a.localeCompare(b));
     topics.forEach(topic => topicFilter.add(new Option(labelTopic(topic), topic)));
     authors.forEach(author => authorFilter.add(new Option(`@${author}`, author)));
-    document.querySelector('#postCount').textContent = state.posts.length;
-    document.querySelector('#mediaCount').textContent = state.posts.filter(post => post.media?.length).length;
     document.querySelector('#updatedAt').textContent = `Updated ${Signal.displayDate(data.generatedAt)}`;
+    const weeklyResponse = await fetch('data/weekly.json', { cache: 'no-cache' });
+    if (weeklyResponse.ok) {
+      const latestWeek = (await weeklyResponse.json()).weeks[0];
+      document.querySelector('#spotlightTitle').textContent = latestWeek.title;
+      document.querySelector('#spotlightSummary').textContent = latestWeek.summary;
+      document.querySelector('#spotlightLink').href = `detail.html?week=${encodeURIComponent(latestWeek.id)}`;
+    }
     render();
   } catch (error) {
     latestFeed.innerHTML = `<div class="empty-state">Could not load the latest feed.<br><small>${error.message}</small></div>`;

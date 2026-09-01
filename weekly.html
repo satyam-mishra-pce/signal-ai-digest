@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Weekly AI digests from the tracked X conversation.">
   <title>Signal — Weekly AI digests</title>
-  <link rel="stylesheet" href="styles.css?v=20260901-4">
+  <link rel="stylesheet" href="styles.css?v=20260901-5">
 </head>
 <body>
   <div class="app-shell">
@@ -17,18 +17,16 @@
         <a class="nav-item active" href="weekly.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18M8 14h3M13 14h3M8 17h3"/></svg><span>Weekly</span></a>
         <a class="nav-item" href="search.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>Search</span></a>
       </nav>
-      <div class="rail-note"><span class="live-dot"></span>Since Jan 1</div>
     </aside>
 
     <main class="feed-column" id="top">
-      <header class="feed-header"><div><h1>Weekly AI digests</h1><p id="feedSubtitle">Loading the archive…</p></div><span class="curated-pill">Archive</span></header>
+      <header class="feed-header"><div><h1>Weekly AI digests</h1><p id="feedSubtitle">What shipped, broke, and changed each week</p></div><span class="curated-pill">Weekly</span></header>
       <section id="feed" class="feed" aria-live="polite"><div class="loading-card"><span></span><span></span><span></span></div></section>
     </main>
 
     <aside class="right-rail">
-      <section class="side-card" id="about"><h2>Weekly archive</h2><p>Coverage begins January 1. Before April, the underlying corpus contains only @poteto; the remaining accounts begin in April.</p><div class="stat-grid"><div><strong id="weekCount">—</strong><span>active weeks</span></div><div><strong id="weeklySourceCount">—</strong><span>AI sources</span></div></div></section>
-      <section class="side-card"><h2>How to read it</h2><p>Topic counts show what dominated each week in this selected set of accounts—not the entire AI ecosystem.</p></section>
-      <p class="side-footnote">Deleted, protected, or de-indexed X posts may be absent.</p>
+      <section class="side-card"><h2>Browse topics</h2><div id="weeklyTopics" class="saved-searches"></div></section>
+      <section class="side-card"><h2>Latest conversations</h2><a class="side-card-link" href="index.html">Open the live feed →</a></section>
     </aside>
   </div>
 
@@ -44,6 +42,6 @@
       </div>
     </a>
   </template>
-  <script src="weekly.js?v=20260901-4" defer></script>
+  <script src="weekly.js?v=20260901-5" defer></script>
 </body>
 </html>

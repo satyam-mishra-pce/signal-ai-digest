@@ -57,7 +57,7 @@ async function runSearch() {
     state.matches = [];
     resultCount.textContent = 'Enter at least 2 characters';
     queryTime.textContent = '';
-    resultsElement.innerHTML = `<div class="empty-state">Search across all ${state.manifest.recordCount.toLocaleString()} collected posts, not only AI digest sources.</div>`;
+    resultsElement.innerHTML = '<div class="empty-state">Try a model, tool, feature, or author.</div>';
     return;
   }
   try {
@@ -130,10 +130,7 @@ async function init() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.manifest = await response.json();
     state.manifest.accounts.forEach(author => authorFilter.add(new Option(`@${author}`, author)));
-    document.querySelector('#archiveCount').textContent = compact.format(state.manifest.recordCount);
-    document.querySelector('#archiveAuthors').textContent = state.manifest.accounts.length;
-    document.querySelector('#searchSubtitle').textContent = `${state.manifest.recordCount.toLocaleString()} posts in ${state.manifest.archive.length} cached monthly shards`;
-    document.querySelector('.feed-header .curated-pill').textContent = `${compact.format(state.manifest.recordCount)} posts`;
+    document.querySelector('#searchSubtitle').textContent = 'Find tools, models, people, threads, and media';
     const params = new URLSearchParams(location.search);
     input.value = params.get('q') || '';
     authorFilter.value = params.get('author') || '';

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="The latest AI engineering posts, threads, quotes, and media from Signal's tracked accounts.">
   <title>Signal — Latest AI posts</title>
-  <link rel="stylesheet" href="styles.css?v=20260901-4">
+  <link rel="stylesheet" href="styles.css?v=20260901-5">
 </head>
 <body>
   <div class="app-shell">
@@ -17,11 +17,10 @@
         <a class="nav-item" href="weekly.html"><span class="nav-symbol">□</span><span>Weekly</span></a>
         <a class="nav-item" href="search.html"><span class="nav-symbol">⌕</span><span>Search</span></a>
       </nav>
-      <div class="rail-note"><span class="live-dot"></span>Weekly updates</div>
     </aside>
 
     <main class="feed-column" id="top">
-      <header class="feed-header"><div><h1>Latest AI posts</h1><p id="feedSubtitle">Loading the newest conversations…</p></div><span class="curated-pill" id="updatedAt">Latest</span></header>
+      <header class="feed-header"><div><h1>Latest AI posts</h1><p id="feedSubtitle">What builders are discussing now</p></div><span class="curated-pill" id="updatedAt">Latest</span></header>
       <section class="feed-toolbar" aria-label="Feed filters">
         <select id="topicFilter" aria-label="Filter by topic"><option value="">All topics</option></select>
         <select id="authorFilter" aria-label="Filter by author"><option value="">All authors</option></select>
@@ -33,12 +32,11 @@
     </main>
 
     <aside class="right-rail">
-      <section class="side-card"><h2>Incremental feed</h2><p>New authored posts, replies, and quotes appear after each scheduled or manual update. Plain reposts stay out.</p><div class="stat-grid"><div><strong id="postCount">—</strong><span>recent posts</span></div><div><strong id="mediaCount">—</strong><span>with media</span></div></div></section>
-      <section class="side-card"><h2>Your state</h2><p>Bookmarks and read markers stay in this browser. No account or database is involved.</p><button class="secondary-button" id="showBookmarks">Show bookmarks</button></section>
-      <p class="side-footnote">Open any Context link to see collected parent and continuation posts.</p>
+      <section class="side-card spotlight-card"><span class="eyebrow">This week</span><h2 id="spotlightTitle">Latest weekly digest</h2><p id="spotlightSummary"></p><a class="side-card-link" id="spotlightLink" href="weekly.html">Read the digest →</a></section>
+      <section class="side-card"><h2>Saved posts</h2><button class="secondary-button" id="showBookmarks">Open bookmarks</button></section>
     </aside>
   </div>
-  <script src="shared.js?v=20260901-4" defer></script>
-  <script src="latest.js?v=20260901-4" defer></script>
+  <script src="shared.js?v=20260901-5" defer></script>
+  <script src="latest.js?v=20260901-5" defer></script>
 </body>
 </html>

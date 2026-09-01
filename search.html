@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Search every collected X post by keyword.">
   <title>Signal — Search raw posts</title>
-  <link rel="stylesheet" href="styles.css?v=20260901-4">
+  <link rel="stylesheet" href="styles.css?v=20260901-5">
 </head>
 <body>
   <div class="app-shell">
@@ -17,11 +17,10 @@
         <a class="nav-item" href="weekly.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18M8 14h3M13 14h3M8 17h3"/></svg><span>Weekly</span></a>
         <a class="nav-item active" href="search.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>Search</span></a>
       </nav>
-      <div class="rail-note"><span class="live-dot"></span>Full corpus</div>
     </aside>
 
     <main class="feed-column">
-      <header class="feed-header"><div><h1>Search raw posts</h1><p id="searchSubtitle">Loading the archive…</p></div><span class="curated-pill">17.6K posts</span></header>
+      <header class="feed-header"><div><h1>Search posts</h1><p id="searchSubtitle">Find tools, models, people, threads, and media</p></div><span class="curated-pill">Search</span></header>
       <section class="search-page-box">
         <label class="archive-search">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
@@ -37,16 +36,15 @@
         <p class="search-help">Every space-separated keyword must match. Use the account filter for author-specific searches.</p>
       </section>
       <div class="results-header"><strong id="resultCount">Enter at least 2 characters</strong><span id="queryTime"></span></div>
-      <section id="searchResults" class="sources-list"><div class="empty-state">Search across all 17,595 collected posts—not only the AI digest sources.</div></section>
+      <section id="searchResults" class="sources-list"><div class="empty-state">Try a model, tool, feature, or author.</div></section>
     </main>
 
     <aside class="right-rail">
-      <section class="side-card" id="about"><h2>Full-corpus search</h2><p>This view searches the normalized raw collection, including non-AI posts. The digest and weekly feeds remain strictly AI-only.</p><div class="stat-grid"><div><strong id="archiveCount">—</strong><span>raw posts</span></div><div><strong id="archiveAuthors">—</strong><span>accounts</span></div></div></section>
       <section class="side-card"><h2>Search examples</h2><div class="example-queries"><button type="button">prompt caching</button><button type="button">MCP</button><button type="button">Claude Code</button><button type="button">local model</button></div></section>
       <section class="side-card"><h2>Saved searches</h2><div id="savedSearches" class="saved-searches"></div></section>
     </aside>
   </div>
-  <script src="shared.js?v=20260901-4" defer></script>
-  <script src="search.js?v=20260901-4" defer></script>
+  <script src="shared.js?v=20260901-5" defer></script>
+  <script src="search.js?v=20260901-5" defer></script>
 </body>
 </html>

@@ -13,21 +13,10 @@ async function init() {
     const posts = data.threads[conversationId];
     if (!posts) throw new Error('No collected context for this conversation');
     document.title = `@${posts[0].author} thread context — Signal`;
-    document.querySelector('#threadMeta').textContent = `${posts.length} collected post${posts.length === 1 ? '' : 's'}`;
-    const hero = document.createElement('section');
-    hero.className = 'thread-hero';
-    const eyebrow = document.createElement('span');
-    eyebrow.className = 'eyebrow';
-    eyebrow.textContent = 'Collected thread context';
-    const heading = document.createElement('h1');
-    heading.textContent = posts.length > 1 ? `Conversation with ${posts.length} tracked posts` : 'Available context for this reply';
-    const note = document.createElement('p');
-    note.textContent = 'Signal reconstructs the parent chain and author continuation from collected posts. Missing external replies remain available through X.';
-    hero.append(eyebrow, heading, note);
     const list = document.createElement('section');
     list.className = 'sources-list thread-list';
     posts.forEach(post => list.append(Signal.postCard(post, { hideThread: true })));
-    threadContent.replaceChildren(hero, list);
+    threadContent.replaceChildren(list);
   } catch (error) {
     threadContent.innerHTML = `<div class="empty-state">Could not load this thread.<br><small>${error.message}</small></div>`;
   }

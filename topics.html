@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="A concise AI-only digest synthesized from selected X accounts.">
   <title>Signal — AI digest</title>
-  <link rel="stylesheet" href="styles.css?v=20260901-4">
+  <link rel="stylesheet" href="styles.css?v=20260901-5">
 </head>
 <body>
   <div class="app-shell">
@@ -17,18 +17,16 @@
         <a class="nav-item" href="weekly.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18M8 14h3M13 14h3M8 17h3"/></svg><span>Weekly</span></a>
         <a class="nav-item" href="search.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>Search</span></a>
       </nav>
-      <div class="rail-note"><span class="live-dot"></span>AI-only signal</div>
     </aside>
 
     <main class="feed-column" id="top">
-      <header class="feed-header"><div><h1>AI digest</h1><p id="feedSubtitle">Distilling the conversation…</p></div><span class="curated-pill">Curated</span></header>
+      <header class="feed-header"><div><h1>Topics</h1><p id="feedSubtitle">Ideas, releases, workflows, and debates</p></div><span class="curated-pill">Digest</span></header>
       <section id="feed" class="feed" aria-live="polite"><div class="loading-card"><span></span><span></span><span></span></div></section>
     </main>
 
     <aside class="right-rail">
-      <section class="side-card" id="about"><h2>About this feed</h2><p>Only AI engineering, models, agent workflows, tooling, safety, and product implications are included.</p><div class="stat-grid"><div><strong id="themeCount">—</strong><span>digest posts</span></div><div><strong id="sourceCount">—</strong><span>AI sources</span></div></div></section>
-      <section class="side-card accounts-card"><h2>Voices tracked</h2><div id="accountCloud" class="account-cloud"></div></section>
-      <p class="side-footnote">Summaries are editorial syntheses. Source posts remain the evidence.</p>
+      <section class="side-card spotlight-card"><span class="eyebrow">This week</span><h2 id="spotlightTitle">Latest weekly digest</h2><p id="spotlightSummary"></p><a class="side-card-link" id="spotlightLink" href="weekly.html">Read the digest →</a></section>
+      <section class="side-card"><h2>Latest conversations</h2><a class="side-card-link" href="index.html">Open the live feed →</a></section>
     </aside>
   </div>
 
@@ -43,6 +41,6 @@
       </div>
     </a>
   </template>
-  <script src="app.js?v=20260901-4" defer></script>
+  <script src="app.js?v=20260901-5" defer></script>
 </body>
 </html>

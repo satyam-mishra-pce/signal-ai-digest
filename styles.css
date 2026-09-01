@@ -108,6 +108,11 @@ nav { display: grid; gap: 8px; }
 .account-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
 .account-cloud span { color: #aab3bc; background: var(--surface-2); border-radius: 999px; padding: 6px 8px; font-size: 11px; }
 .side-footnote { margin: 17px 8px; color: var(--faint); font-size: 11px; line-height: 1.45; }
+.spotlight-card .eyebrow { margin-top: 0; }
+.spotlight-card h2 { line-height: 1.25; }
+.spotlight-card p { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 5; }
+.side-card-link { display: inline-block; margin-top: 14px; color: var(--blue); text-decoration: none; font-size: 12px; font-weight: 700; }
+.side-card-link:hover { text-decoration: underline; }
 
 .loading-card { min-height: 260px; display: grid; place-content: center; grid-auto-flow: column; gap: 6px; border-top: 1px solid var(--line); }
 .loading-card span { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); animation: bounce 1s infinite ease-in-out; }

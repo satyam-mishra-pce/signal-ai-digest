@@ -43,25 +43,24 @@ function renderFeed(data) {
     card.querySelector('time').textContent = displayDate(theme.latestAt);
     card.querySelector('time').dateTime = theme.latestAt;
     card.querySelector('.source-total').textContent = compact.format(theme.sourceCount);
-    card.querySelector('.evidence-copy').textContent = `${theme.sourceCount} related posts from ${theme.authorCount} voices`;
+    card.querySelector('.evidence-copy').textContent = theme.topAuthors.slice(0, 3).map(({ name }) => `@${name}`).join(' · ');
     const avatars = card.querySelector('.avatar-stack');
     theme.topAuthors.slice(0, 4).forEach(({ name, profilePicture }) => avatars.append(createAvatar(name, profilePicture)));
     feed.append(card);
   }
 }
 
-function hydrateSummary(data) {
-  document.querySelector('#themeCount').textContent = data.themes.length;
-  document.querySelector('#sourceCount').textContent = compact.format(data.aiSourceRecords);
-  document.querySelector('#feedSubtitle').textContent = `${data.themes.length} syntheses from ${compact.format(data.corpusRecords)} collected posts`;
-  const authors = new Set();
-  data.themes.forEach(theme => theme.sources.forEach(source => authors.add(source.author)));
-  const cloud = document.querySelector('#accountCloud');
-  [...authors].sort((a, b) => a.localeCompare(b)).forEach(author => {
-    const item = document.createElement('span');
-    item.textContent = `@${author}`;
-    cloud.append(item);
-  });
+function hydrateSummary() {
+  document.querySelector('#feedSubtitle').textContent = 'Ideas, releases, workflows, and debates';
+}
+
+async function hydrateSpotlight() {
+  const response = await fetch('data/weekly.json', { cache: 'no-cache' });
+  if (!response.ok) return;
+  const week = (await response.json()).weeks[0];
+  document.querySelector('#spotlightTitle').textContent = week.title;
+  document.querySelector('#spotlightSummary').textContent = week.summary;
+  document.querySelector('#spotlightLink').href = `detail.html?week=${encodeURIComponent(week.id)}`;
 }
 
 async function init() {
@@ -69,8 +68,9 @@ async function init() {
     const response = await fetch('data/digest.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
-    hydrateSummary(data);
+    hydrateSummary();
     renderFeed(data);
+    hydrateSpotlight();
   } catch (error) {
     feed.innerHTML = `<div class="empty-state">Could not load the digest. Serve this directory with a local web server.<br><small>${error.message}</small></div>`;
   }
