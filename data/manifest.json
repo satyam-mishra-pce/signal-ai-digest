@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-01T12:28:08.865337+00:00",
+  "generatedAt": "2026-09-01T13:06:43.883657+00:00",
   "latestWeek": "2026-08-31",
-  "recordCount": 17595,
-  "aiRecordCount": 1724,
-  "threadCount": 682,
+  "recordCount": 17766,
+  "aiRecordCount": 1736,
+  "threadCount": 689,
   "accounts": [
     "antirez",
     "badlogicgames",
@@ -20,9 +20,14 @@
   ],
   "archive": [
     {
+      "month": "2026-09",
+      "path": "data/archive/2026-09.json",
+      "records": 68
+    },
+    {
       "month": "2026-08",
       "path": "data/archive/2026-08.json",
-      "records": 3271
+      "records": 3374
     },
     {
       "month": "2026-07",
