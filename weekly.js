@@ -66,7 +66,7 @@ function render(data) {
 
 async function init() {
   try {
-    const response = await fetch('data/weekly.json');
+    const response = await fetch('data/weekly.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     render(await response.json());
   } catch (error) {

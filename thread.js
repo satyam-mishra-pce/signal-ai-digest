@@ -7,7 +7,7 @@ async function init() {
     return;
   }
   try {
-    const response = await fetch('data/threads.json');
+    const response = await fetch('data/threads.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     const posts = data.threads[conversationId];
@@ -26,7 +26,7 @@ async function init() {
     hero.append(eyebrow, heading, note);
     const list = document.createElement('section');
     list.className = 'sources-list thread-list';
-    posts.forEach(post => list.append(Signal.postCard(post, { showThread: false })));
+    posts.forEach(post => list.append(Signal.postCard(post, { hideThread: true })));
     threadContent.replaceChildren(hero, list);
   } catch (error) {
     threadContent.innerHTML = `<div class="empty-state">Could not load this thread.<br><small>${error.message}</small></div>`;

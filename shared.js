@@ -173,7 +173,7 @@ const Signal = (() => {
     metrics.innerHTML = `<span>♡ ${compact.format(record.likeCount || 0)}</span><span>↩ ${compact.format(record.replyCount || 0)}</span><span>⟳ ${compact.format(record.retweetCount || 0)}</span><span>◉ ${compact.format(record.viewCount || 0)}</span>`;
     const actions = document.createElement('span');
     actions.className = 'post-actions';
-    if (record.conversationId && (record.threadSize > 1 || record.inReplyToId)) {
+    if (!options.hideThread && record.conversationId && (record.threadSize > 1 || record.inReplyToId)) {
       const thread = document.createElement('a');
       thread.className = 'thread-link';
       thread.href = `thread.html?id=${encodeURIComponent(record.conversationId)}`;
@@ -183,7 +183,7 @@ const Signal = (() => {
     const bookmark = document.createElement('button');
     bookmark.className = 'bookmark-button';
     bookmark.type = 'button';
-    bookmark.innerHTML = '<span aria-hidden="true">⌑</span><span class="sr-only">Bookmark</span>';
+    bookmark.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4.5h11v15l-5.5-3.2-5.5 3.2v-15Z"></path></svg><span class="sr-only">Bookmark</span>';
     bookmark.classList.toggle('active', storedSet(BOOKMARK_KEY).has(record.id));
     bookmark.setAttribute('aria-pressed', String(storedSet(BOOKMARK_KEY).has(record.id)));
     bookmark.title = storedSet(BOOKMARK_KEY).has(record.id) ? 'Remove bookmark' : 'Bookmark post';

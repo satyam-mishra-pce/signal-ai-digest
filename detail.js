@@ -155,7 +155,7 @@ async function init() {
   const isWeekly = Boolean(weekId);
   const dataUrl = isWeekly ? 'data/weekly.json' : 'data/digest.json';
   try {
-    const response = await fetch(dataUrl);
+    const response = await fetch(dataUrl, { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     state.item = isWeekly

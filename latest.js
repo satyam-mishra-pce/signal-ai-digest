@@ -51,7 +51,7 @@ function resetAndRender() {
 
 async function init() {
   try {
-    const response = await fetch('data/latest.json');
+    const response = await fetch('data/latest.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     state.posts = data.posts;

@@ -15,7 +15,7 @@ async function loadArchive() {
   state.loading = (async () => {
     resultCount.textContent = 'Loading search shards…';
     const payloads = await Promise.all(state.manifest.archive.map(async shard => {
-      const response = await fetch(shard.path);
+      const response = await fetch(shard.path, { cache: 'no-cache' });
       if (!response.ok) throw new Error(`Could not load ${shard.month}`);
       return response.json();
     }));
@@ -126,7 +126,7 @@ function renderSavedSearches() {
 
 async function init() {
   try {
-    const response = await fetch('data/manifest.json');
+    const response = await fetch('data/manifest.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.manifest = await response.json();
     state.manifest.accounts.forEach(author => authorFilter.add(new Option(`@${author}`, author)));
