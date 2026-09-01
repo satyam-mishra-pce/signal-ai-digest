@@ -12,10 +12,10 @@
     <aside class="left-rail" aria-label="Primary navigation">
       <a class="brand" href="index.html" aria-label="Signal home"><span class="brand-mark">S</span><span class="brand-name">signal</span></a>
       <nav>
-        <a class="nav-item" href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.2 12 4l8 7.2V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1v-8.8Z"/></svg><span>Digest</span></a>
+        <a class="nav-item" href="index.html"><span class="nav-symbol">◉</span><span>Latest</span></a>
+        <a class="nav-item" href="topics.html"><span class="nav-symbol">✦</span><span>Topics</span></a>
         <a class="nav-item" href="weekly.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18M8 14h3M13 14h3M8 17h3"/></svg><span>Weekly</span></a>
         <a class="nav-item active" href="search.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span>Search</span></a>
-        <a class="nav-item" href="#about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.1"/></svg><span>About</span></a>
       </nav>
       <div class="rail-note"><span class="live-dot"></span>Full corpus</div>
     </aside>
@@ -30,6 +30,9 @@
         <div class="search-controls">
           <select id="authorFilter" aria-label="Filter by account"><option value="">All accounts</option></select>
           <select id="typeFilter" aria-label="Filter by post type"><option value="">All post types</option><option value="post">Posts</option><option value="reply">Replies</option><option value="quote">Quotes</option></select>
+          <label class="toggle-filter"><input id="searchMediaFilter" type="checkbox"> Media</label>
+          <label class="toggle-filter"><input id="searchBookmarkFilter" type="checkbox"> Bookmarks</label>
+          <button type="button" class="secondary-button" id="saveSearch">Save search</button>
         </div>
         <p class="search-help">Every space-separated keyword must match. Use the account filter for author-specific searches.</p>
       </section>
@@ -40,8 +43,10 @@
     <aside class="right-rail">
       <section class="side-card" id="about"><h2>Full-corpus search</h2><p>This view searches the normalized raw collection, including non-AI posts. The digest and weekly feeds remain strictly AI-only.</p><div class="stat-grid"><div><strong id="archiveCount">—</strong><span>raw posts</span></div><div><strong id="archiveAuthors">—</strong><span>accounts</span></div></div></section>
       <section class="side-card"><h2>Search examples</h2><div class="example-queries"><button type="button">prompt caching</button><button type="button">MCP</button><button type="button">Claude Code</button><button type="button">local model</button></div></section>
+      <section class="side-card"><h2>Saved searches</h2><div id="savedSearches" class="saved-searches"></div></section>
     </aside>
   </div>
+  <script src="shared.js" defer></script>
   <script src="search.js" defer></script>
 </body>
 </html>

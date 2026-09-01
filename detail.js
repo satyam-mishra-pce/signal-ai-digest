@@ -117,41 +117,7 @@ function createToolbar() {
 }
 
 function createSourcePost(source) {
-  const article = document.createElement('article');
-  article.className = 'source-post';
-  article.append(createAvatar(source.author, source.profilePicture));
-  const body = document.createElement('div');
-  const head = document.createElement('div');
-  head.className = 'source-head';
-  const author = document.createElement('strong');
-  author.textContent = `@${source.author}`;
-  const separator = document.createElement('span');
-  separator.textContent = '·';
-  const time = document.createElement('time');
-  time.dateTime = source.createdAt;
-  time.textContent = displayDate(source.createdAt, true);
-  const type = document.createElement('span');
-  type.className = 'source-type';
-  type.textContent = source.isQuote && source.type === 'reply' ? 'reply + quote' : source.type;
-  head.append(author, separator, time, type);
-  const text = document.createElement('p');
-  text.className = 'source-text';
-  text.textContent = source.text;
-  const foot = document.createElement('div');
-  foot.className = 'source-foot';
-  const metrics = document.createElement('span');
-  metrics.className = 'source-metrics';
-  metrics.innerHTML = `<span>♡ ${compact.format(source.likeCount || 0)}</span><span>↩ ${compact.format(source.replyCount || 0)}</span><span>◉ ${compact.format(source.viewCount || 0)}</span>`;
-  const link = document.createElement('a');
-  link.className = 'x-link';
-  link.href = source.url;
-  link.target = '_blank';
-  link.rel = 'noopener noreferrer';
-  link.textContent = 'View on X ↗';
-  foot.append(metrics, link);
-  body.append(head, text, foot);
-  article.append(body);
-  return article;
+  return Signal.postCard(source, { compact: true, showThread: true });
 }
 
 function filteredSources() {
@@ -201,7 +167,7 @@ async function init() {
     detailMeta.textContent = isWeekly
       ? `${displayDate(state.item.weekStart)}–${displayDate(state.item.weekEnd)} · ${state.item.sourceCount} sources`
       : `${state.item.sourceCount} related posts · ${state.item.authorCount} authors`;
-    backLink.href = isWeekly ? 'weekly.html' : 'index.html';
+    backLink.href = isWeekly ? 'weekly.html' : 'topics.html';
     detailContent.replaceChildren(createHero(state.item), createToolbar());
     const list = document.createElement('section');
     list.id = 'sourcesList';

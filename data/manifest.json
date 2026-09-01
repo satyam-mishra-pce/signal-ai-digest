@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-09-01T12:28:08.865337+00:00",
+  "latestWeek": "2026-08-31",
+  "recordCount": 17595,
+  "aiRecordCount": 1724,
+  "threadCount": 682,
+  "accounts": [
+    "antirez",
+    "badlogicgames",
+    "bcherny",
+    "ClaudeDevs",
+    "dwarkesh_sp",
+    "localfirstconf",
+    "mitsuhiko",
+    "poteto",
+    "rauchg",
+    "steipete",
+    "thsottiaux",
+    "tobi"
+  ],
+  "archive": [
+    {
+      "month": "2026-08",
+      "path": "data/archive/2026-08.json",
+      "records": 3271
+    },
+    {
+      "month": "2026-07",
+      "path": "data/archive/2026-07.json",
+      "records": 2784
+    },
+    {
+      "month": "2026-06",
+      "path": "data/archive/2026-06.json",
+      "records": 2389
+    },
+    {
+      "month": "2026-05",
+      "path": "data/archive/2026-05.json",
+      "records": 5167
+    },
+    {
+      "month": "2026-04",
+      "path": "data/archive/2026-04.json",
+      "records": 3903
+    },
+    {
+      "month": "2026-03",
+      "path": "data/archive/2026-03.json",
+      "records": 27
+    },
+    {
+      "month": "2026-02",
+      "path": "data/archive/2026-02.json",
+      "records": 46
+    },
+    {
+      "month": "2026-01",
+      "path": "data/archive/2026-01.json",
+      "records": 8
+    }
+  ]
+}

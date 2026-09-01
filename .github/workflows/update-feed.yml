@@ -1,0 +1,77 @@
+name: Update Signal feed
+
+on:
+  schedule:
+    # Monday 08:30 Asia/Kolkata. GitHub schedules use UTC.
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: signal-feed-update
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: gemini-3.6-flash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check required secrets
+        run: |
+          test -n "$APIFY_TOKEN" || { echo "APIFY_TOKEN is missing"; exit 1; }
+          test -n "$GEMINI_API_KEY" || { echo "GEMINI_API_KEY is missing"; exit 1; }
+
+      - name: Collect, enrich, summarize, and build
+        run: python3 scripts/pipeline.py update | tee /tmp/update-report.json
+
+      - name: Run pipeline tests
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Validate generated data
+        run: python3 scripts/pipeline.py validate | tee /tmp/validation-report.json
+
+      - name: Smoke test static files
+        run: |
+          python3 -m http.server 4173 >/tmp/signal-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill $server_pid' EXIT
+          sleep 1
+          curl --fail --silent http://127.0.0.1:4173/latest.html >/dev/null
+          curl --fail --silent http://127.0.0.1:4173/data/manifest.json >/dev/null
+          curl --fail --silent http://127.0.0.1:4173/data/latest.json >/dev/null
+
+      - name: Commit generated update
+        run: |
+          if git diff --quiet && test -z "$(git status --porcelain)"; then
+            echo "No feed changes to commit."
+            exit 0
+          fi
+          git config user.name "signal-feed-bot"
+          git config user.email "signal-feed-bot@users.noreply.github.com"
+          git add source-data data
+          git commit -m "Update Signal feed $(date -u +%Y-%m-%d)"
+          git push
+
+      - name: Report failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Signal feed update failed on $(date -u +%Y-%m-%d)"
+          body=$(printf 'The scheduled or manual feed update failed.\n\nRun: %s/actions/runs/%s\n\nThe previous production data was not replaced.' "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$GITHUB_RUN_ID")
+          gh issue create --title "$title" --body "$body" --label automation || gh issue create --title "$title" --body "$body"

@@ -59,7 +59,9 @@ function render(data) {
   }
   document.querySelector('#weekCount').textContent = data.weeks.length;
   document.querySelector('#weeklySourceCount').textContent = compact.format(sourceTotal);
-  document.querySelector('#feedSubtitle').textContent = `${data.weeks.length} active weeks from Jan 1 through Aug 31`;
+  const oldest = data.weeks.at(-1)?.weekStart;
+  const newest = data.weeks[0]?.weekEnd;
+  document.querySelector('#feedSubtitle').textContent = `${data.weeks.length} active weeks from ${dateLabel(oldest, newest)}`;
 }
 
 async function init() {

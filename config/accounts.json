@@ -1,0 +1,28 @@
+{
+  "accounts": [
+    "poteto",
+    "ClaudeDevs",
+    "bcherny",
+    "steipete",
+    "thsottiaux",
+    "antirez",
+    "mitsuhiko",
+    "badlogicgames",
+    "localfirstconf",
+    "dwarkesh_sp",
+    "rauchg",
+    "tobi"
+  ],
+  "schedule": {
+    "timezone": "Asia/Kolkata",
+    "localTime": "08:30",
+    "day": "Monday",
+    "cronUtc": "0 3 * * 1"
+  },
+  "collection": {
+    "actor": "xquik/x-tweet-scraper",
+    "maxItemsPerRun": 2500,
+    "maxChargeUsdPerRun": 0.5,
+    "overlapDays": 2
+  }
+}
