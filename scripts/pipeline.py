@@ -343,11 +343,11 @@ Use only the supplied posts. Summarize what people literally shipped, built, tes
 Return one JSON object with:
 - title: a specific 8-14 word headline
 - summary: 2-3 specific sentences
-- details: 3-5 substantive paragraphs
+- details: 3-5 objects with `text` (one substantive paragraph) and `sourcePostIds` (1-4 supporting IDs copied exactly from the bracketed IDs)
 - takeaways: 3 short practical conclusions
 - sourcePostIds: 5-12 supporting IDs copied exactly from the bracketed IDs
 
-Every claim must be supported by at least one supplied post. Plain JSON only.{prior}
+Every paragraph must cite the posts that support its claims. Every claim must be supported by at least one supplied post. Plain JSON only.{prior}
 
 Posts:\n""" + "\n".join(source_lines)
     body = {
@@ -363,8 +363,16 @@ Posts:\n""" + "\n".join(source_lines)
     cited = [str(value) for value in summary.get("sourcePostIds", [])]
     if not cited or any(value not in valid_ids for value in cited):
         raise RuntimeError("Gemini returned missing or invalid sourcePostIds")
-    if not isinstance(summary.get("details"), list) or len(summary["details"]) < 3:
+    details = summary.get("details")
+    if not isinstance(details, list) or len(details) < 3:
         raise RuntimeError("Gemini returned fewer than three detail paragraphs")
+    for detail in details:
+        if not isinstance(detail, dict) or not isinstance(detail.get("text"), str):
+            raise RuntimeError("Gemini returned an invalid detail paragraph")
+        detail_ids = [str(value) for value in detail.get("sourcePostIds", [])]
+        if not detail_ids or any(value not in valid_ids for value in detail_ids):
+            raise RuntimeError("Gemini returned missing or invalid paragraph sourcePostIds")
+        detail["sourcePostIds"] = detail_ids
     return summary
 
 
@@ -569,6 +577,15 @@ def validate() -> dict[str, int]:
             raise RuntimeError(f"Unknown source in week {week['id']}")
         if week.get("sourcePostIds") and any(value not in post_ids for value in week["sourcePostIds"]):
             raise RuntimeError(f"Unknown editorial citation in week {week['id']}")
+    for collection in (weekly["weeks"], digest["themes"]):
+        for item in collection:
+            source_ids = {source["id"] for source in item["sources"]}
+            for detail in item.get("details", []):
+                if not isinstance(detail, dict) or not detail.get("text"):
+                    raise RuntimeError(f"Invalid detail paragraph in {item['id']}")
+                citations = detail.get("sourcePostIds", [])
+                if not citations or any(value not in source_ids for value in citations):
+                    raise RuntimeError(f"Invalid paragraph citation in {item['id']}")
     return {
         "records": len(post_ids),
         "latest": len(latest["posts"]),

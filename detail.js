@@ -1,10 +1,9 @@
 const detailContent = document.querySelector('#detailContent');
 const detailMeta = document.querySelector('#detailMeta');
-const detailKind = document.querySelector('#detailKind');
 const backLink = document.querySelector('#backLink');
 const compact = new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 });
 const authorColors = ['#5865f2', '#d14d72', '#3ba272', '#8f6ed5', '#d1843d', '#277da1', '#a65b7b', '#4c956c'];
-const state = { item: null, query: '', visible: 30 };
+const state = { item: null, query: '', visible: 30, focusedSourceId: null };
 
 function hashValue(value) {
   let hash = 0;
@@ -36,59 +35,120 @@ function displayDate(value, full = false) {
   ).format(new Date(value));
 }
 
+function detailParagraphs(item) {
+  const fallbackIds = item.sourcePostIds?.length
+    ? item.sourcePostIds
+    : item.sources.slice(0, Math.max(item.details.length, 1) * 2).map(source => source.id);
+  return item.details.map((detail, index) => {
+    if (typeof detail !== 'string') return detail;
+    const start = (index * 2) % Math.max(fallbackIds.length, 1);
+    return { text: detail, sourcePostIds: fallbackIds.slice(start, start + 2) };
+  });
+}
+
+function scrollToSource(postId) {
+  const source = state.item.sources.find(item => item.id === postId);
+  if (!source) return;
+  state.query = '';
+  state.focusedSourceId = postId;
+  renderSources();
+  const search = detailContent.querySelector('.source-search');
+  if (search) search.value = '';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const post = detailContent.querySelector(`[data-post-id="${postId}"]`);
+    if (!post) return;
+    post.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    post.classList.add('source-post-highlight');
+    window.setTimeout(() => post.classList.remove('source-post-highlight'), 1800);
+  }));
+}
+
+function createCitation(source) {
+  const link = document.createElement('a');
+  link.className = 'summary-citation';
+  link.href = `#post-${source.id}`;
+  link.title = `Source: @${source.author}`;
+  link.setAttribute('aria-label', `Scroll to source post by @${source.author}`);
+  link.append(createAvatar(source.author, source.profilePicture, 'summary-citation-avatar'));
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    scrollToSource(source.id);
+  });
+  return link;
+}
+
+function appendDetailParagraph(container, detail, item) {
+  const paragraph = document.createElement('p');
+  paragraph.append(document.createTextNode(detail.text));
+  const citations = document.createElement('span');
+  citations.className = 'summary-citations';
+  detail.sourcePostIds
+    .map(id => item.sources.find(source => source.id === id))
+    .filter(Boolean)
+    .forEach(source => citations.append(createCitation(source)));
+  if (citations.childElementCount) paragraph.append(' ', citations);
+  container.append(paragraph);
+}
+
 function createHero(item) {
   const hero = document.createElement('section');
   hero.className = 'detail-hero';
   hero.dataset.accent = item.accent;
-  const eyebrow = document.createElement('span');
-  eyebrow.className = 'eyebrow';
-  eyebrow.textContent = item.eyebrow;
   const title = document.createElement('h1');
   title.textContent = item.title;
+  hero.append(title);
+
+  const summaryToggle = document.createElement('button');
+  summaryToggle.className = 'summary-toggle';
+  summaryToggle.type = 'button';
+  summaryToggle.textContent = 'Summarize the Summary';
+  summaryToggle.setAttribute('aria-expanded', 'false');
   const summary = document.createElement('p');
+  summary.className = 'short-summary';
   summary.textContent = item.summary;
-  hero.append(eyebrow, title, summary);
+  summary.hidden = true;
+  summaryToggle.addEventListener('click', () => {
+    summary.hidden = !summary.hidden;
+    summaryToggle.textContent = summary.hidden ? 'Summarize the Summary' : 'Hide Summary';
+    summaryToggle.setAttribute('aria-expanded', String(!summary.hidden));
+  });
+  hero.append(summaryToggle, summary);
+
   if (item.details?.length) {
+    const details = detailParagraphs(item);
     const prose = document.createElement('div');
     prose.className = 'detail-prose';
-    prose.hidden = true;
-    item.details.forEach(text => {
-      const paragraph = document.createElement('p');
-      paragraph.textContent = text;
-      prose.append(paragraph);
-    });
-    const readMore = document.createElement('button');
-    readMore.className = 'read-more-button detail-read-more';
-    readMore.type = 'button';
-    readMore.textContent = 'Read more';
-    readMore.setAttribute('aria-expanded', 'false');
-    readMore.addEventListener('click', () => {
-      prose.hidden = !prose.hidden;
-      readMore.textContent = prose.hidden ? 'Read more' : 'Show less';
-      readMore.setAttribute('aria-expanded', String(!prose.hidden));
-    });
-    hero.append(readMore, prose);
+    const first = details[0];
+    const preview = document.createElement('p');
+    preview.className = 'detail-preview';
+    const previewLimit = 360;
+    const shouldTruncate = first.text.length > previewLimit || details.length > 1;
+    const previewText = first.text.length > previewLimit
+      ? `${first.text.slice(0, previewLimit).replace(/\s+\S*$/, '')}…`
+      : first.text;
+    preview.append(document.createTextNode(previewText));
+    if (shouldTruncate) {
+      const readMore = document.createElement('button');
+      readMore.className = 'inline-read-more';
+      readMore.type = 'button';
+      readMore.textContent = 'Read More';
+      readMore.setAttribute('aria-expanded', 'false');
+      readMore.addEventListener('click', () => {
+        prose.replaceChildren();
+        details.forEach(detail => appendDetailParagraph(prose, detail, item));
+      });
+      preview.append(' ', readMore);
+    }
+    const citations = document.createElement('span');
+    citations.className = 'summary-citations';
+    first.sourcePostIds
+      .map(id => item.sources.find(source => source.id === id))
+      .filter(Boolean)
+      .forEach(source => citations.append(createCitation(source)));
+    if (citations.childElementCount) preview.append(' ', citations);
+    prose.append(preview);
+    hero.append(prose);
   }
-
-  if (item.themeBreakdown) {
-    const breakdown = document.createElement('div');
-    breakdown.className = 'theme-breakdown';
-    item.themeBreakdown.forEach(theme => {
-      const chip = document.createElement('span');
-      chip.textContent = theme.label;
-      breakdown.append(chip);
-    });
-    hero.append(breakdown);
-  }
-
-  const takeaways = document.createElement('ul');
-  takeaways.className = 'takeaways';
-  item.takeaways.forEach(text => {
-    const listItem = document.createElement('li');
-    listItem.textContent = text;
-    takeaways.append(listItem);
-  });
-  hero.append(takeaways);
   return hero;
 }
 
@@ -106,6 +166,7 @@ function createToolbar() {
   input.addEventListener('input', event => {
     state.query = event.target.value.trim().toLowerCase();
     state.visible = 30;
+    state.focusedSourceId = null;
     renderSources();
   });
   wrap.append(input);
@@ -137,7 +198,18 @@ function renderSources() {
     list.append(empty);
     return;
   }
-  sources.slice(0, state.visible).forEach(source => list.append(createSourcePost(source)));
+  const focusedSource = state.focusedSourceId
+    ? sources.find(source => source.id === state.focusedSourceId)
+    : null;
+  if (focusedSource) {
+    const focusedPost = createSourcePost(focusedSource);
+    focusedPost.classList.add('focused-summary-source');
+    list.append(focusedPost);
+  }
+  sources
+    .slice(0, state.visible)
+    .filter(source => source.id !== state.focusedSourceId)
+    .forEach(source => list.append(createSourcePost(source)));
   if (state.visible < sources.length) {
     const button = document.createElement('button');
     button.className = 'load-more';
@@ -163,7 +235,6 @@ async function init() {
       : data.themes.find(item => item.id === themeId);
     if (!state.item) throw new Error('Digest not found');
     document.title = `${state.item.title} — Signal`;
-    detailKind.textContent = isWeekly ? 'Weekly AI digest' : 'Digest thread';
     detailMeta.textContent = isWeekly
       ? `${displayDate(state.item.weekStart)}–${displayDate(state.item.weekEnd)}`
       : 'Topic digest';

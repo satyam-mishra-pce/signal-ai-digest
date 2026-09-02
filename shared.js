@@ -121,6 +121,7 @@ const Signal = (() => {
   function postCard(record, options = {}) {
     const article = document.createElement('article');
     article.className = `source-post rich-post${options.compact ? ' compact-post' : ''}`;
+    article.id = `post-${record.id}`;
     article.dataset.postId = record.id;
     if (!storedSet(READ_KEY).has(record.id)) article.classList.add('unread-post');
     article.append(avatar(record));
