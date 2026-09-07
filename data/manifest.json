@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-01T13:06:43.883657+00:00",
-  "latestWeek": "2026-08-31",
-  "recordCount": 17766,
-  "aiRecordCount": 1736,
-  "threadCount": 689,
+  "generatedAt": "2026-09-07T08:07:31.215485+00:00",
+  "latestWeek": "2026-09-07",
+  "recordCount": 18404,
+  "aiRecordCount": 1791,
+  "threadCount": 719,
   "accounts": [
     "antirez",
     "badlogicgames",
@@ -22,7 +22,7 @@
     {
       "month": "2026-09",
       "path": "data/archive/2026-09.json",
-      "records": 68
+      "records": 706
     },
     {
       "month": "2026-08",
