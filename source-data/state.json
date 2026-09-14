@@ -1,51 +1,51 @@
 {
-  "lastSuccessfulAt": "2026-09-07T08:07:31.237762+00:00",
-  "recordCount": 18404,
+  "lastSuccessfulAt": "2026-09-14T08:45:31.632342+00:00",
+  "recordCount": 19169,
   "lastRun": {
-    "start": "2026-08-30",
-    "end": "2026-09-08",
-    "rawRecords": 957,
-    "acceptedRecords": 957
+    "start": "2026-09-05",
+    "end": "2026-09-15",
+    "rawRecords": 986,
+    "acceptedRecords": 986
   },
   "accounts": {
     "poteto": {
-      "latestPostId": "2096870903670079491"
+      "latestPostId": "2099347299550056797"
     },
     "ClaudeDevs": {
       "latestPostId": "2093742323582849038"
     },
     "bcherny": {
-      "latestPostId": "2096093732991025412"
+      "latestPostId": "2099322487603634395"
     },
     "steipete": {
-      "latestPostId": "2096796239392297302"
+      "latestPostId": "2099341248381530175"
     },
     "thsottiaux": {
-      "latestPostId": "2096847737153012204"
+      "latestPostId": "2099394561076568290"
     },
     "antirez": {
-      "latestPostId": "2096724533604397452"
+      "latestPostId": "2099252388766859337"
     },
     "mitsuhiko": {
-      "latestPostId": "2096736584003399741"
+      "latestPostId": "2099173587026427931"
     },
     "badlogicgames": {
-      "latestPostId": "2096176754121400398"
+      "latestPostId": "2098869209543434255"
     },
     "localfirstconf": {
       "latestPostId": "2085345950755700814"
     },
     "dwarkesh_sp": {
-      "latestPostId": "2095585499394019492"
+      "latestPostId": "2098909106325311636"
     },
     "rauchg": {
-      "latestPostId": "2096746981544915441"
+      "latestPostId": "2099340737670525302"
     },
     "tobi": {
-      "latestPostId": "2096741216066904247"
+      "latestPostId": "2099322895772069925"
     },
     "claudedevs": {
-      "latestPostId": "2095651107645145538"
+      "latestPostId": "2098519883214643227"
     }
   }
 }
